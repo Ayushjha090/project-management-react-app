@@ -1,10 +1,12 @@
 import {type FC} from 'react';
 
+import ProjectHeader from './components/header/ProjectHeader';
+
 const App: FC = () => {
   return (
-    <div>
-      <h1 className='text-3xl font-bold underline'>Welcome to Project Hub!</h1>
-    </div>
+    <>
+     <ProjectHeader /> 
+    </>
   )
 }
 
