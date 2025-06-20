@@ -88,12 +88,13 @@ const Projects: FC<ProjectsProps> = ({
         </div>
         <div className="w-full md:w-1/2 flex justify-end my-2">
           <Button>
-            <MdAdd className="text-2xl inline-block group-hover:rotate-90 transition-all duration-300"/> New Project
+            <MdAdd className="text-2xl inline-block group-hover:rotate-90 transition-all duration-300" />{" "}
+            New Project
           </Button>
         </div>
       </div>
       <div className="w-xs md:w-3/4 flex flex-wrap mx-auto justify-between items-center px-5 py-2">
-        <ProjectListing 
+        <ProjectListing
           projects={projects}
           fileteredProjects={filteredProjects}
           onSelectProject={onSelectProject}

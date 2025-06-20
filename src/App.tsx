@@ -1,6 +1,7 @@
 import { type FC, useState } from "react";
 
-import ProjectHeader from "./components/header/ProjectHeader";
+// import ProjectHeader from "./components/header/ProjectHeader";
+import Header from "./components/header";
 
 import type { Project } from "./types/project";
 import Projects from "./components/projects";
@@ -8,18 +9,18 @@ import Projects from "./components/projects";
 const App: FC = () => {
   const [projectSelected, setProjectSelected] = useState<string | null>(null);
   const [projects, setProjects] = useState<Project[]>([
-    {
-      id: "1",
-      name: "Sample Project",
-      description: "This is a sample project description.",
-      status: "in-progress",
-      tasks: [],
-      createdAt: new Date(),
-      updatedAt: new Date(),
-      priority: "medium",
-      startDate: new Date(),
-      dueDate: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
-    },
+    // {
+    //   id: "1",
+    //   name: "Sample Project",
+    //   description: "This is a sample project description.",
+    //   status: "in-progress",
+    //   tasks: [],
+    //   createdAt: new Date(),
+    //   updatedAt: new Date(),
+    //   priority: "medium",
+    //   startDate: new Date(),
+    //   dueDate: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
+    // },
   ]);
 
   return (
@@ -30,7 +31,7 @@ const App: FC = () => {
       </div>
       {!projectSelected?.trim().length ? (
         <>
-          <ProjectHeader />
+          <Header />
           <Projects
             projects={projects}
             onSelectProject={() => {}}

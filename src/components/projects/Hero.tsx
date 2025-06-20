@@ -148,28 +148,15 @@ const Hero: FC<HeroProps> = ({
   ];
 
   return (
-    <div className="flex flex-col items-center justify-center w-full">
-      <div className="p-5 w-2xs md:w-sm rounded-2xl bg-white flex flex-row items-center justify-between shadow-2xl">
-        <div className="flex flex-col justify-center items-center px-5">
-          <h2 className="text-2xl font-bold">{totalProjects}</h2>
-          <p className="text-sm text-gray-500">Projects</p>
-        </div>
-        <div className="h-3/4 border-l border-gray-300"></div>
-        <div className="flex flex-col justify-center items-center px-5">
-          <h2 className="text-2xl font-bold text-blue-600">
-            {totalActiveProjects}
-          </h2>
-          <p className="text-sm text-gray-500">Active</p>
-        </div>
-        <div className="h-3/4 border-l border-gray-300"></div>
-        <div className="flex flex-col justify-center items-center px-5">
-          <h2 className="text-2xl font-bold text-green-600">
-            {completedPercentage}%
-          </h2>
-          <p className="text-sm text-gray-500">Complete</p>
-        </div>
-      </div>
-      <div className="w-full flex flex-wrap justify-between items-center mt-8">
+    <div className="flex flex-col items-start justify-center w-full">
+      <h1 className="text-2xl md:text-4xl font-bold bg-gradient-to-r from-gray-900 via-blue-800 to-purple-800 bg-clip-text text-transparent mb-4">
+        Welcome to Project Hub!
+      </h1>
+      <p className="text-sm md:text-xl text-gray-600 leading-relaxed mb-8">
+        Organize, track, and manage your projects with style. Your personal
+        workspace for productivity
+      </p>
+      <div className="w-full flex flex-wrap justify-between items-center">
         {cards.map((card) => (
           <Card key={card.title} {...card} />
         ))}
