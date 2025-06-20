@@ -66,13 +66,7 @@ const colorMap = {
   },
 };
 
-const Card: FC<CardProps> = ({
-  title,
-  value,
-  icon,
-  color,
-  percentage,
-}) => {
+const Card: FC<CardProps> = ({ title, value, icon, color, percentage }) => {
   const c = colorMap[color as keyof typeof colorMap];
 
   return (
@@ -80,17 +74,19 @@ const Card: FC<CardProps> = ({
       className={`group flex flex-col w-xs justify-center ${c.border} ${c.bg} p-8 shadow-lg rounded-lg cursor-pointer my-2 transition-all duration-400 hover:shadow-xl hover:-translate-y-2`}
     >
       <div className="flex flex-row justify-start">
-        <Icon 
-            icon={icon}
-            iconClassName="text-white text-4xl"
-            backgroundClassName={`${c.iconBg} h-16 w-16 p-2 rounded-lg flex items-center justify-center transition-transform duration-300 group-hover:scale-110`}
+        <Icon
+          icon={icon}
+          iconClassName="text-white text-4xl"
+          backgroundClassName={`${c.iconBg} h-16 w-16 p-2 rounded-lg flex items-center justify-center transition-transform duration-300 group-hover:scale-110`}
         />
         <div className="flex flex-col ml-3">
-            <p className={`text-3xl ${c.textValue} font-bold`}>{value}</p>
-            <p className={`text-xl ${c.textTitle}`}>{title}</p>
+          <p className={`text-3xl ${c.textValue} font-bold`}>{value}</p>
+          <p className={`text-xl ${c.textTitle}`}>{title}</p>
         </div>
       </div>
-      <div className={`w-full ${c.progressBg} rounded-full h-2.5 dark:${c.progressDark} mt-3`}>
+      <div
+        className={`w-full ${c.progressBg} rounded-full h-2.5 dark:${c.progressDark} mt-3`}
+      >
         <div
           className={`${c.progressBar} h-2.5 rounded-full transition-all duration-300`}
           style={{ width: `${percentage}%` }}
@@ -111,13 +107,19 @@ const Hero: FC<HeroProps> = ({
       ? Math.round((totalCompletedProjects / totalProjects) * 100)
       : 0;
 
-  const cards: {title: string, value: number, icon: IconType, color: string, percentage: number}[] = [
+  const cards: {
+    title: string;
+    value: number;
+    icon: IconType;
+    color: string;
+    percentage: number;
+  }[] = [
     {
       title: "Total Projects",
       value: totalProjects,
       icon: MdFolderOpen,
       color: "blue",
-      percentage: totalProjects,
+      percentage: totalProjects > 0 ? 100 : 0,
     },
     {
       title: "Active Projects",
@@ -169,7 +171,7 @@ const Hero: FC<HeroProps> = ({
       </div>
       <div className="w-full flex flex-wrap justify-between items-center mt-8">
         {cards.map((card) => (
-            <Card key={card.title} {...card} />
+          <Card key={card.title} {...card} />
         ))}
       </div>
     </div>

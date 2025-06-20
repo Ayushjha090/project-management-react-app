@@ -7,7 +7,20 @@ import Projects from "./components/projects";
 
 const App: FC = () => {
   const [projectSelected, setProjectSelected] = useState<string | null>(null);
-  const [projects, setProjects] = useState<Project[]>([]);
+  const [projects, setProjects] = useState<Project[]>([
+    {
+      id: "1",
+      name: "Sample Project",
+      description: "This is a sample project description.",
+      status: "in-progress",
+      tasks: [],
+      createdAt: new Date(),
+      updatedAt: new Date(),
+      priority: "medium",
+      startDate: new Date(),
+      dueDate: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
+    },
+  ]);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-white to-purple-50">
