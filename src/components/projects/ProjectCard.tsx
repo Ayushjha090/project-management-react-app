@@ -1,8 +1,7 @@
-import type { FC } from "react";
+import { type FC, useRef, useState, useEffect } from "react";
 
 import { MdOutlineMoreHoriz } from "react-icons/md";
 import { MdCalendarToday } from "react-icons/md";
-import { MdAddchart } from "react-icons/md";
 
 import Card from "../shared/Card";
 import type { Project } from "../../types/project";
@@ -123,14 +122,92 @@ const ProjectCard: FC<ProjectCardProps> = ({
   const isOverdue = projectDaysLeft < 0;
   const daysLeftText = isOverdue ? "Overdue" : `${projectDaysLeft} days left`;
 
+  const handleClickViewDetailsButton = () => {
+    onSelectProject(projectDetails.id);
+  };
+
+  const ProjectDropdown = ({
+    onEdit,
+    onView,
+    onDelete,
+  }: {
+    onEdit: () => void;
+    onView: () => void;
+    onDelete: () => void;
+  }) => {
+    const [open, setOpen] = useState(false);
+    const ref = useRef<HTMLDivElement>(null);
+
+    // Close dropdown on outside click
+    useEffect(() => {
+      function handleClickOutside(event: globalThis.MouseEvent) {
+        if (ref.current && !ref.current.contains(event.target as Node)) {
+          setOpen(false);
+        }
+      }
+      if (open) document.addEventListener("mousedown", handleClickOutside);
+      return () =>
+        document.removeEventListener("mousedown", handleClickOutside);
+    }, [open]);
+
+    return (
+      <div className="relative" ref={ref}>
+        <div
+          className="flex justify-between items-center p-2 hover:bg-gray-100 hover:bg-opacity-20 rounded-lg cursor-pointer"
+          onClick={() => setOpen((prev) => !prev)}
+        >
+          <MdOutlineMoreHoriz size={24} />
+        </div>
+        {/* Dropdown */}
+        <div
+          className={`absolute right-0 mt-2 w-44 bg-white rounded-lg shadow-lg border border-gray-100 transition-all duration-200 origin-top-right z-20 ${
+            open
+              ? "opacity-100 scale-100 pointer-events-auto"
+              : "opacity-0 scale-95 pointer-events-none"
+          }`}
+        >
+          <button
+            className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-t-lg transition"
+            onClick={() => {
+              setOpen(false);
+              onEdit();
+            }}
+          >
+            Edit Project
+          </button>
+          <button
+            className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100 transition"
+            onClick={() => {
+              setOpen(false);
+              onView();
+            }}
+          >
+            View Details
+          </button>
+          <button
+            className="block w-full text-left px-4 py-2 text-red-600 hover:bg-red-50 rounded-b-lg transition"
+            onClick={() => {
+              setOpen(false);
+              onDelete();
+            }}
+          >
+            Delete Project
+          </button>
+        </div>
+      </div>
+    );
+  };
+
   return (
     <Card>
       <div className="flex flex-col">
         <div className="flex flex-row justify-between items-center">
           <p className="text-xl font-bold">{projectDetails.name}</p>
-          <div className="flex justify-between items-center p-2 hover:bg-gray-100 hover:bg-opacity-20 rounded-lg cursor-pointer">
-            <MdOutlineMoreHoriz size={24} />
-          </div>
+          <ProjectDropdown
+            onEdit={() => onUpdateProject(projectDetails.id)}
+            onView={() => onSelectProject(projectDetails.id)}
+            onDelete={() => onDeleteProject(projectDetails.id)}
+          />
         </div>
         {projectDetails.description && (
           <div className="w-full">
@@ -200,7 +277,10 @@ const ProjectCard: FC<ProjectCardProps> = ({
           <hr className="my-4 border-gray-300" />
         </div>
         <div className="w-full flex justify-end">
-          <button className="px-4 py-2 text-blue-600 rounded-lg hover:bg-gray-200 transition-colors duration-300 cursor-pointer">
+          <button
+            className="px-4 py-2 text-blue-600 rounded-lg hover:bg-gray-200 transition-colors duration-300 cursor-pointer"
+            onClick={handleClickViewDetailsButton}
+          >
             View Details
           </button>
         </div>
