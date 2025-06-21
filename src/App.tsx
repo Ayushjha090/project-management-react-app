@@ -9,18 +9,43 @@ import Projects from "./components/projects";
 const App: FC = () => {
   const [projectSelected, setProjectSelected] = useState<string | null>(null);
   const [projects, setProjects] = useState<Project[]>([
-    // {
-    //   id: "1",
-    //   name: "Sample Project",
-    //   description: "This is a sample project description.",
-    //   status: "in-progress",
-    //   tasks: [],
-    //   createdAt: new Date(),
-    //   updatedAt: new Date(),
-    //   priority: "medium",
-    //   startDate: new Date(),
-    //   dueDate: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
-    // },
+    {
+      id: "1",
+      name: "Sample Project",
+      description: "This is a sample project description.",
+      status: "in-progress",
+      tasks: [
+        {
+          id: "1",
+          title: "Sample Task",
+          description: "This is a sample task description.",
+          status: "in-progress",
+          priority: "medium",
+          createdAt: new Date(),
+          updatedAt: new Date(),
+          startDate: new Date(),
+          dueDate: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000),
+          projectId: "1",
+        },
+        {
+          id: "1",
+          title: "Sample Task 2",
+          description: "This is a sample task 2 description.",
+          status: "done",
+          priority: "medium",
+          createdAt: new Date(),
+          updatedAt: new Date(),
+          startDate: new Date(),
+          dueDate: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000),
+          projectId: "1",
+        },
+      ],
+      createdAt: new Date(),
+      updatedAt: new Date(),
+      priority: "medium",
+      startDate: new Date(),
+      dueDate: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
+    },
   ]);
 
   return (

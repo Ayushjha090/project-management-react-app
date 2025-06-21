@@ -71,7 +71,7 @@ const Card: FC<CardProps> = ({ title, value, icon, color, percentage }) => {
 
   return (
     <div
-      className={`group flex flex-col w-xs justify-center ${c.border} ${c.bg} p-8 shadow-lg rounded-lg cursor-pointer my-2 transition-all duration-400 hover:shadow-xl hover:-translate-y-2`}
+      className={`group flex flex-col w-full lg:w-xs justify-center ${c.border} ${c.bg} p-8 shadow-lg rounded-lg cursor-pointer my-2 transition-all duration-400 hover:shadow-xl hover:-translate-y-2`}
     >
       <div className="flex flex-row justify-start">
         <Icon
@@ -143,7 +143,7 @@ const Hero: FC<HeroProps> = ({
       value: totalTasks,
       icon: MdAddchart,
       color: "purple",
-      percentage: totalTasks,
+      percentage: totalTasks > 0 ? 100 : 0,
     },
   ];
 

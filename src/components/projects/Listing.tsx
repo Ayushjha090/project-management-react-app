@@ -2,8 +2,9 @@ import { type FC } from "react";
 
 import { MdAdd } from "react-icons/md";
 
-import type { Project } from "../../types/project";
 import Button from "../shared/Button";
+import ProjectCard from "./ProjectCard";
+import type { Project } from "../../types/project";
 interface ProjectListingProps {
   projects: Project[];
   fileteredProjects: Project[];
@@ -32,12 +33,14 @@ const ProjectListing: FC<ProjectListingProps> = ({
               Create your first project and start turning your ideas into
               reality
             </p>
-            <Button>Create Your First Project</Button>
+            <Button onClick={onClickCreateProject}>
+              Create Your First Project
+            </Button>
           </div>
         </div>
       ) : (
         <>
-          {!fileteredProjects?.length && (
+          {!fileteredProjects?.length ? (
             <div className="w-full flex flex-col items-center justify-center py-20">
               <div className="max-w-md text-center">
                 <div className="bg-gradient-to-br from-blue-100 via-purple-100 to-pink-100 rounded-full w-32 h-32 flex items-center justify-center mx-auto mb-8 shadow-2xl">
@@ -51,6 +54,18 @@ const ProjectListing: FC<ProjectListingProps> = ({
                   you're looking for
                 </p>
               </div>
+            </div>
+          ) : (
+            <div className="w-full flex gap-4 flex-wrap mt-6">
+              {fileteredProjects.map((project) => (
+                <ProjectCard
+                  key={project.id}
+                  projectDetails={project}
+                  onSelectProject={onSelectProject}
+                  onDeleteProject={() => {}}
+                  onUpdateProject={() => {}}
+                />
+              ))}
             </div>
           )}
         </>
