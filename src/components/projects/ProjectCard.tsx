@@ -114,11 +114,14 @@ const ProjectCard: FC<ProjectCardProps> = ({
       : 0;
   const progressBarWidth = `${completedTasksPercentage}%`;
 
-  const projectDaysLeft = Math.ceil(
-    (new Date(projectDetails.dueDate).getTime() -
-      new Date(projectDetails.startDate).getTime()) /
-      (1000 * 60 * 60 * 24)
-  );
+  const projectDaysLeft =
+    projectDetails.dueDate && projectDetails.startDate
+      ? Math.ceil(
+          (new Date(projectDetails.dueDate).getTime() -
+            new Date(projectDetails.startDate).getTime()) /
+            (1000 * 60 * 60 * 24)
+        )
+      : 0;
   const isOverdue = projectDaysLeft < 0;
   const daysLeftText = isOverdue ? "Overdue" : `${projectDaysLeft} days left`;
 
@@ -243,13 +246,15 @@ const ProjectCard: FC<ProjectCardProps> = ({
           ></div>
         </div>
         <div className="w-full flex justify-between items-center mt-5 mb-2">
-          <div className="flex items-center gap-2 h-5">
-            <MdCalendarToday className="text-gray-500" />
-            <span className="text-sm text-gray-700">
-              Start Date:{" "}
-              {new Date(projectDetails.startDate).toLocaleDateString()}
-            </span>
-          </div>
+          {projectDetails?.startDate && (
+            <div className="flex items-center gap-2 h-5">
+              <MdCalendarToday className="text-gray-500" />
+              <span className="text-sm text-gray-700">
+                Start Date:{" "}
+                {new Date(projectDetails.startDate).toLocaleDateString()}
+              </span>
+            </div>
+          )}
           <div className="flex items-center h-5">
             <span className="text-sm text-gray-700">
               {totalCompletedTasks} of {totalTasks} tasks completed
@@ -257,12 +262,15 @@ const ProjectCard: FC<ProjectCardProps> = ({
           </div>
         </div>
         <div className="w-full flex justify-between items-center">
-          <div className="flex items-center gap-2 h-5">
-            <MdCalendarToday className="text-gray-500" />
-            <span className="text-sm text-gray-700">
-              Due Date: {new Date(projectDetails.dueDate).toLocaleDateString()}
-            </span>
-          </div>
+          {projectDetails?.dueDate && (
+            <div className="flex items-center gap-2 h-5">
+              <MdCalendarToday className="text-gray-500" />
+              <span className="text-sm text-gray-700">
+                Due Date:{" "}
+                {new Date(projectDetails.dueDate).toLocaleDateString()}
+              </span>
+            </div>
+          )}
           <div className="flex items-center h-5">
             <span
               className={`text-sm ${

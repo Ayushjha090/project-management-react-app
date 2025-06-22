@@ -10,6 +10,8 @@ interface ProjectListingProps {
   fileteredProjects: Project[];
   onSelectProject: (projectId: string) => void;
   onClickCreateProject: () => void;
+  onDeleteProject: (projectId: string) => void;
+  onUpdateProject: (projectId: string) => void;
 }
 
 const ProjectListing: FC<ProjectListingProps> = ({
@@ -17,6 +19,8 @@ const ProjectListing: FC<ProjectListingProps> = ({
   fileteredProjects,
   onSelectProject,
   onClickCreateProject,
+  onDeleteProject,
+  onUpdateProject,
 }) => {
   return (
     <div className="w-full">
@@ -62,8 +66,8 @@ const ProjectListing: FC<ProjectListingProps> = ({
                   key={project.id}
                   projectDetails={project}
                   onSelectProject={onSelectProject}
-                  onDeleteProject={() => {}}
-                  onUpdateProject={() => {}}
+                  onDeleteProject={onDeleteProject}
+                  onUpdateProject={onUpdateProject}
                 />
               ))}
             </div>

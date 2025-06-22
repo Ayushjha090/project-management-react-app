@@ -7,7 +7,7 @@ import type { Project } from "./types/project";
 import Projects from "./components/projects";
 
 const App: FC = () => {
-  const [projectSelected, setProjectSelected] = useState<string | null>(null);
+  const [projectSelected, setProjectSelected] = useState<Project | null>(null);
   const [projects, setProjects] = useState<Project[]>([
     {
       id: "1",
@@ -48,21 +48,58 @@ const App: FC = () => {
     },
   ]);
 
+  const handleCreateProject = (projectData: Project) => {
+    const projectsLength = projects.length;
+    projectData.id = (projectsLength + 1).toString();
+    setProjects((prevProjects) => [...prevProjects, projectData]);
+  };
+
+  const handleDeleteProject = (projectId: string) => {
+    setProjects((prevProjects) => {
+      const filteredProjects = prevProjects.filter(
+        (project) => project.id !== projectId
+      );
+
+      return filteredProjects;
+    });
+  };
+
+  const handleSelectProject = (projectId: string) => {
+    const project = projects.find((project) => project.id === projectId);
+
+    if (project) {
+      setProjectSelected(project);
+    }
+  };
+
+  const handleUpdateProject = (projectId: string, projectData: Project) => {
+    const projectExist = projects.some((project) => project.id === projectId);
+    if (!projectExist) {
+      return;
+    }
+
+    setProjects((prevProjects) =>
+      prevProjects.map((project) =>
+        project.id === projectId ? { ...project, ...projectData } : project
+      )
+    );
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-white to-purple-50">
       <div className="fixed inset-0 overflow-hidden pointer-events-none">
         <div className="absolute -top-40 -right-40 w-80 h-80 bg-gradient-to-br from-blue-400/20 to-purple-400/20 rounded-full blur-3xl animate-pulse"></div>
         <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-gradient-to-br from-purple-400/20 to-pink-400/20 rounded-full blur-3xl animate-pulse delay-1000"></div>
       </div>
-      {!projectSelected?.trim().length ? (
+      {!projectSelected ? (
         <>
           <Header />
           <Projects
             projects={projects}
-            onSelectProject={() => {}}
-            onCreateProject={() => {}}
-            onDeleteProject={() => {}}
-            onUpdateProject={() => {}}
+            onSelectProject={handleSelectProject}
+            onCreateProject={handleCreateProject}
+            onDeleteProject={handleDeleteProject}
+            onUpdateProject={handleUpdateProject}
           />
         </>
       ) : null}

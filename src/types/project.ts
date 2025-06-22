@@ -7,8 +7,8 @@ export interface Project {
     status: 'in-progress' | 'planning' | 'on-hold' | 'completed' | 'cancelled';
     priority: 'low' | 'medium' | 'high' | 'critical';
     tasks: Task[];
-    startDate: Date;
-    dueDate: Date;
+    startDate: Date | null;
+    dueDate: Date | null;
     createdAt: Date;
     updatedAt: Date;
 }

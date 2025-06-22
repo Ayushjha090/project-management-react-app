@@ -1,13 +1,17 @@
-import { type FC, useState } from "react";
+import { type FC, useEffect, useRef, useState } from "react";
 
 import { MdAdd } from "react-icons/md";
 
 import Hero from "./Hero";
 import CategoryDropdown from "../shared/Search";
 import Button from "../shared/Button";
+import ProjectListing from "./Listing";
+import Modal from "../shared/Modal";
+import ProjectForm from "./ProjectForm";
+
 import { PROJECT_STATUS_MAP } from "../../utils/constants";
 import type { Project } from "../../types/project";
-import ProjectListing from "./Listing";
+import type { ModalRef } from "../../types/modal";
 
 interface ProjectsProps {
   projects: Project[];
@@ -24,9 +28,16 @@ const Projects: FC<ProjectsProps> = ({
   onUpdateProject,
   onDeleteProject,
 }) => {
+  const modalRef = useRef<ModalRef>(null);
+  const updateModalRef = useRef<ModalRef>(null);
   const [filteredProjects, setFilteredProjects] = useState<Project[]>(projects);
   const [selectedCategory, setSelectedCategory] =
     useState<string>("All categories");
+  const [updatingProject, setUpdatingProject] = useState<Project | null>(null);
+
+  useEffect(() => {
+    setFilteredProjects(projects);
+  }, [projects]);
 
   const totalProjects = projects.length;
   const totalTasks = projects.reduce(
@@ -67,6 +78,34 @@ const Projects: FC<ProjectsProps> = ({
     }
   };
 
+  const handleClickCreateProject = () => {
+    if (modalRef.current) {
+      modalRef.current.open();
+    }
+  };
+
+  const handleCancel = () => {
+    if (modalRef.current) {
+      modalRef.current.close();
+    }
+  };
+
+  const handleClickUpdateProject = (projectId: string) => {
+    const selectedProject = projects.find(
+      (project) => project.id === projectId
+    );
+    if (selectedProject && updateModalRef.current) {
+      setUpdatingProject(selectedProject);
+      updateModalRef.current.open();
+    }
+  };
+
+  const handleCancelUpdateProject = () => {
+    if (updateModalRef.current) {
+      updateModalRef.current.close();
+    }
+  };
+
   return (
     <>
       <div className="w-xs md:w-3/4 flex mx-auto my-2 p-5 justify-center">
@@ -87,7 +126,7 @@ const Projects: FC<ProjectsProps> = ({
           />
         </div>
         <div className="w-full md:w-1/2 flex justify-end my-2">
-          <Button>
+          <Button onClick={handleClickCreateProject}>
             <MdAdd className="text-2xl inline-block group-hover:rotate-90 transition-all duration-300" />{" "}
             New Project
           </Button>
@@ -98,9 +137,24 @@ const Projects: FC<ProjectsProps> = ({
           projects={projects}
           fileteredProjects={filteredProjects}
           onSelectProject={onSelectProject}
-          onClickCreateProject={() => onCreateProject({} as Project)}
+          onClickCreateProject={handleClickCreateProject}
+          onDeleteProject={onDeleteProject}
+          onUpdateProject={handleClickUpdateProject}
         />
       </div>
+      <Modal ref={modalRef} title="Create Project">
+        <ProjectForm onSubmit={onCreateProject} onCancel={handleCancel} />
+      </Modal>
+
+      <Modal ref={updateModalRef} title="Update Project">
+        <ProjectForm
+          project={updatingProject}
+          onSubmit={(projectData: Project) =>
+            onUpdateProject(projectData.id, projectData)
+          }
+          onCancel={handleCancelUpdateProject}
+        />
+      </Modal>
     </>
   );
 };
