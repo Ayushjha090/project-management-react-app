@@ -1,10 +1,10 @@
 import { type FC, useState } from "react";
 
-// import ProjectHeader from "./components/header/ProjectHeader";
 import Header from "./components/header";
-
-import type { Project } from "./types/project";
 import Projects from "./components/projects";
+import Tasks from "./components/tasks";
+import type { Project } from "./types/project";
+import type { Task } from "./types/task";
 
 const App: FC = () => {
   const [projectSelected, setProjectSelected] = useState<Project | null>(null);
@@ -85,15 +85,97 @@ const App: FC = () => {
     );
   };
 
+  const handleCreateTask = (data: Task) => {
+    if (!data) return;
+
+    const { projectId } = data;
+    const isProjectFound = projects.some((project) => project.id === projectId);
+    if (!isProjectFound) {
+      console.error("Project not found");
+    }
+    setProjects((prevProjects) => {
+      return prevProjects.map((project) => {
+        if (project.id === projectId) {
+          return {
+            ...project,
+            tasks: [...project.tasks, data],
+          };
+        }
+        return project;
+      });
+    });
+  };
+
+  const handleDeleteTask = (projectId: string, taskId: string) => {
+    if (!projectId || !taskId) {
+      return;
+    }
+
+    const project = projects.find((project) => project.id === projectId);
+    if (!project) {
+      console.error("Project not found");
+    }
+    const isTaskFound = project?.tasks.some((task) => task.id === taskId);
+    if (!isTaskFound) {
+      console.error("Task not found");
+    }
+    setProjects((prevProjects) => {
+      return prevProjects.map((project) => {
+        if (project.id === projectId) {
+          const filteredTasks = project.tasks.filter(
+            (task) => task.id === taskId
+          );
+          return {
+            ...project,
+            tasks: filteredTasks,
+          };
+        }
+        return project;
+      });
+    });
+  };
+
+  const handleUpdateTask = (projectId: string, taskId: string, data: Task) => {
+    if (!projectId || !taskId) {
+      return;
+    }
+    const project = projects.find((project) => project.id === projectId);
+    if (!project) {
+      console.error("Project not found");
+    }
+    const isTaskFound = project?.tasks?.some((task) => task.id === taskId);
+    if (!isTaskFound) {
+      console.error("Task not found");
+    }
+    setProjects((prevProjects) => {
+      return prevProjects.map((project) => {
+        if (project.id === projectId) {
+          const updatedTasks = project.tasks.map((task) => {
+            if (task.id === taskId) {
+              return { ...data };
+            }
+            return task;
+          });
+          return { ...project, tasks: updatedTasks };
+        }
+        return project;
+      });
+    });
+  };
+
+  const handleClickBackToProjects = () => {
+    setProjectSelected(null);
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-white to-purple-50">
       <div className="fixed inset-0 overflow-hidden pointer-events-none">
         <div className="absolute -top-40 -right-40 w-80 h-80 bg-gradient-to-br from-blue-400/20 to-purple-400/20 rounded-full blur-3xl animate-pulse"></div>
         <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-gradient-to-br from-purple-400/20 to-pink-400/20 rounded-full blur-3xl animate-pulse delay-1000"></div>
       </div>
+      <Header />
       {!projectSelected ? (
         <>
-          <Header />
           <Projects
             projects={projects}
             onSelectProject={handleSelectProject}
@@ -103,7 +185,14 @@ const App: FC = () => {
           />
         </>
       ) : (
-        <h1>Project Selected</h1>
+        <Tasks
+          projectDetails={projectSelected}
+          tasks={projectSelected.tasks}
+          onCreateTask={handleCreateTask}
+          onUpdateTask={handleUpdateTask}
+          onDeleteTask={handleDeleteTask}
+          onClickBack={handleClickBackToProjects}
+        />
       )}
     </div>
   );
