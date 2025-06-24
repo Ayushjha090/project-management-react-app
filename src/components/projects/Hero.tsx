@@ -148,7 +148,7 @@ const Hero: FC<HeroProps> = ({
   ];
 
   return (
-    <div className="flex flex-col items-start justify-center w-full">
+    <div className="flex flex-col items-start justify-center w-full mt-5">
       <h1 className="text-2xl md:text-4xl font-bold bg-gradient-to-r from-gray-900 via-blue-800 to-purple-800 bg-clip-text text-transparent mb-4">
         Welcome to Project Hub!
       </h1>

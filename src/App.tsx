@@ -102,7 +102,9 @@ const App: FC = () => {
             onUpdateProject={handleUpdateProject}
           />
         </>
-      ) : null}
+      ) : (
+        <h1>Project Selected</h1>
+      )}
     </div>
   );
 };

@@ -60,7 +60,7 @@ const ProjectListing: FC<ProjectListingProps> = ({
               </div>
             </div>
           ) : (
-            <div className="w-full flex gap-4 flex-wrap mt-6">
+            <div className="w-full flex gap-4 flex-wrap mt-4">
               {fileteredProjects.map((project) => (
                 <ProjectCard
                   key={project.id}

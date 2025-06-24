@@ -108,7 +108,7 @@ const Projects: FC<ProjectsProps> = ({
 
   return (
     <>
-      <div className="w-xs md:w-3/4 flex mx-auto my-2 p-5 justify-center">
+      <div className="w-xs md:w-3/4 flex mx-auto my-2 justify-center">
         <Hero
           totalActiveProjects={totalActiveProjects}
           totalProjects={totalProjects}
@@ -116,7 +116,7 @@ const Projects: FC<ProjectsProps> = ({
           totalCompletedProjects={totalCompletedProjects}
         />
       </div>
-      <div className="w-xs md:w-3/4 flex flex-wrap mx-auto justify-between items-center px-5 py-2">
+      <div className="w-xs md:w-3/4 flex flex-wrap mx-auto justify-between items-center py-2">
         <div className="w-full md:w-1/2 my-2">
           <CategoryDropdown
             statusMap={PROJECT_STATUS_MAP}
@@ -132,7 +132,7 @@ const Projects: FC<ProjectsProps> = ({
           </Button>
         </div>
       </div>
-      <div className="w-xs md:w-3/4 flex flex-wrap mx-auto justify-between items-center px-5 py-2">
+      <div className="w-xs md:w-3/4 flex flex-wrap mx-auto justify-between items-center">
         <ProjectListing
           projects={projects}
           fileteredProjects={filteredProjects}
