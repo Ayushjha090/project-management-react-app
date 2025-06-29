@@ -6,7 +6,7 @@ import { MdCalendarToday } from "react-icons/md";
 import Card from "../shared/Card";
 import Chip from "../shared/Chip";
 import {
-  getProjectPriorityUIConfig,
+  getPriorityUIConfig,
   getProjectStatusUIConfig,
 } from "../../utils/helper";
 import type { Project } from "../../types/project";
@@ -31,12 +31,8 @@ const ProjectCard: FC<ProjectCardProps> = ({
     projectStatusLabel,
   } = getProjectStatusUIConfig(projectDetails);
 
-  const {
-    projectPriorityBgColor,
-    projectPriorityBorderColor,
-    projectPriorityColor,
-    projectPriorityLabel,
-  } = getProjectPriorityUIConfig(projectDetails);
+  const { priorityBgColor, priorityBorderColor, priorityColor, priorityLabel } =
+    getPriorityUIConfig(projectDetails);
 
   const totalCompletedTasks = projectDetails.tasks.reduce((acc, task) => {
     return acc + (task.status.toLowerCase() === "done" ? 1 : 0);
@@ -160,10 +156,10 @@ const ProjectCard: FC<ProjectCardProps> = ({
             title={projectStatusLabel}
           />
           <Chip
-            bgColor={projectPriorityBgColor}
-            borderColor={projectPriorityBorderColor}
-            textColor={projectPriorityColor}
-            title={projectPriorityLabel}
+            bgColor={priorityBgColor}
+            borderColor={priorityBorderColor}
+            textColor={priorityColor}
+            title={priorityLabel}
           />
         </div>
         <div className="w-full flex justify-between items-center my-1">

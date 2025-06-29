@@ -1,6 +1,7 @@
 import { useRef, useEffect, useState, type FC } from "react";
 
 interface CategoryDropdownProps {
+  title: string;
   statusMap: Record<string, string>;
   selectedCategory: string;
   onSearch: (searchItem: string) => void;
@@ -8,6 +9,7 @@ interface CategoryDropdownProps {
 }
 
 const CategoryDropdown: FC<CategoryDropdownProps> = ({
+  title,
   statusMap,
   selectedCategory,
   onSearch,
@@ -124,7 +126,7 @@ const CategoryDropdown: FC<CategoryDropdownProps> = ({
             type="search"
             id="search-dropdown"
             className="h-12 block w-full z-20 text-sm text-gray-900 bg-gray-50 rounded-r-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 px-4"
-            placeholder="Search Projects..."
+            placeholder={`Search ${title}...`}
             onChange={onChangeSearch}
             required
           />

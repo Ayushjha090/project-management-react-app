@@ -1,5 +1,6 @@
-import { PROJECT_UI_STATUS_MAP, PROJECT_UI_PRIORITY_MAP } from "./constants";
+import { PROJECT_UI_STATUS_MAP, PRIORITY_MAP, TASK_UI_STATUS_MAP } from "./constants";
 import type { Project } from "../types/project";
+import type { Task } from "../types/task";
 
 export const getProjectStatusUIConfig = (projectDetails: Project) => {
   const defaultBgColor = "bg-gray-200";
@@ -24,25 +25,48 @@ export const getProjectStatusUIConfig = (projectDetails: Project) => {
   };
 };
 
-export const getProjectPriorityUIConfig = (projectDetails: Project) => {
+export const getPriorityUIConfig = (details: Project | Task) => {
   const defaultBgColor = "bg-gray-200";
   const defaultColor = "text-gray-600";
   const defaultBorderColor = "border-gray-300";
 
-  const projectPriorityBgColor =
-    PROJECT_UI_PRIORITY_MAP[projectDetails.priority]?.bgColor || defaultBgColor;
-  const projectPriorityColor =
-    PROJECT_UI_PRIORITY_MAP[projectDetails.priority]?.color || defaultColor;
-  const projectPriorityBorderColor =
-    PROJECT_UI_PRIORITY_MAP[projectDetails.priority]?.borderColor ||
+  const priorityBgColor =
+    PRIORITY_MAP[details.priority]?.bgColor || defaultBgColor;
+  const priorityColor =
+    PRIORITY_MAP[details.priority]?.color || defaultColor;
+  const priorityBorderColor =
+    PRIORITY_MAP[details.priority]?.borderColor ||
     defaultBorderColor;
-  const projectPriorityLabel =
-    PROJECT_UI_PRIORITY_MAP[projectDetails.priority]?.label || "Unknown Priority";
+  const priorityLabel =
+    PRIORITY_MAP[details.priority]?.label || "Unknown Priority";
 
   return {
-    projectPriorityBgColor,
-    projectPriorityColor,
-    projectPriorityBorderColor,
-    projectPriorityLabel,
+    priorityBgColor,
+    priorityColor,
+    priorityBorderColor,
+    priorityLabel,
+  };
+};
+
+export const getTaskStatusUIConfig = (taskDetails: Task) => {
+  const defaultBgColor = "bg-gray-200";
+  const defaultColor = "text-gray-600";
+  const defaultBorderColor = "border-gray-300";
+
+  const taskStatusBgColor =
+    TASK_UI_STATUS_MAP[taskDetails.status]?.bgColor || defaultBgColor;
+  const taskStatusColor =
+    TASK_UI_STATUS_MAP[taskDetails.status]?.color || defaultColor;
+  const taskStatusBorderColor =
+    TASK_UI_STATUS_MAP[taskDetails.status]?.borderColor ||
+    defaultBorderColor;
+  const taskStatusLabel =
+    TASK_UI_STATUS_MAP[taskDetails.status]?.label || "Unknown Status";
+
+  return {
+    taskStatusBgColor,
+    taskStatusColor,
+    taskStatusBorderColor,
+    taskStatusLabel,
   };
 };

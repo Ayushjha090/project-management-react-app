@@ -12,7 +12,7 @@ import type { IconType } from "react-icons";
 
 import Chip from "../shared/Chip";
 import {
-  getProjectPriorityUIConfig,
+  getPriorityUIConfig,
   getProjectStatusUIConfig,
 } from "../../utils/helper";
 import type { Project } from "../../types/project";
@@ -114,12 +114,8 @@ const Hero: FC<HeroSectionProps> = ({ projectDetails, onClickBack }) => {
     projectStatusLabel,
   } = getProjectStatusUIConfig(projectDetails);
 
-  const {
-    projectPriorityBgColor,
-    projectPriorityBorderColor,
-    projectPriorityColor,
-    projectPriorityLabel,
-  } = getProjectPriorityUIConfig(projectDetails);
+  const { priorityBgColor, priorityBorderColor, priorityColor, priorityLabel } =
+    getPriorityUIConfig(projectDetails);
 
   const completedTasks = projectDetails.tasks.filter(
     (t) => t.status === "done"
@@ -202,10 +198,10 @@ const Hero: FC<HeroSectionProps> = ({ projectDetails, onClickBack }) => {
               title={projectStatusLabel}
             />
             <Chip
-              bgColor={projectPriorityBgColor}
-              borderColor={projectPriorityBorderColor}
-              textColor={projectPriorityColor}
-              title={projectPriorityLabel}
+              bgColor={priorityBgColor}
+              borderColor={priorityBorderColor}
+              textColor={priorityColor}
+              title={priorityLabel}
             />
           </div>
         </div>

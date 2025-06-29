@@ -119,6 +119,7 @@ const Projects: FC<ProjectsProps> = ({
       <div className="w-xs md:w-3/4 flex flex-wrap mx-auto justify-between items-center py-2">
         <div className="w-full md:w-1/2 my-2">
           <CategoryDropdown
+            title="Projects"
             statusMap={PROJECT_STATUS_MAP}
             selectedCategory={selectedCategory}
             onSearch={handleSearch}
